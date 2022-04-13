@@ -1,0 +1,13 @@
+1. what digital signature algorithm was used to authenticate them
+2. what their public key is
+3. what are the public parameters used in the algorithm (e.g. the prime numer p for RSA).
+
+
+
+
+
+
+
+
+
+

@@ -88,8 +88,32 @@ def ecb_encrypt(P ,K):
 #   CBC mode: encrypt the plaintext with the same key, and XOR the ciphertext with
 #   the previous ciphertext block. Return the ciphertext.
 
-#   OFB(IV, key).
+def cbc_encrypt(P, K, IV):
+    newP = text_to_binary_list(P) # turn P from a string to a list of bits
+    ciphertext = []
+    prev_ciphertext = IV
+    #count = 0
+    for i in range(0, len(newP), 32):
+        ciphertext.append(encrypt(xor(newP[i:i+32], prev_ciphertext), K)) # encrypt the 32 bits of P
+        prev_ciphertext = ciphertext[-1]
+        #count += 1
+    #print(count) ## for-loop is looping 41 times which is the expected amount of blocks
+    return ciphertext
 
+
+#function for output feedback mode(OFB) of operation 
+## TODO NOT IMPLEMENTED YET
+def ofb_encrypt(P, K, IV):
+    newP = text_to_binary_list(P) # turn P from a string to a list of bits
+    ciphertext = []
+    prev_ciphertext = IV
+    #count = 0
+    for i in range(0, len(newP), 32):
+        ciphertext.append(encrypt(xor(newP[i:i+32], prev_ciphertext), K)) # encrypt the 32 bits of P
+        prev_ciphertext = ciphertext[-1]
+        #count += 1
+    #print(count) ## for-loop is looping 41 times which is the expected amount of blocks
+    return ciphertext
 
 ##TODO 
 # encrypt the plaintext in gold_plaintext.in with ECB, CBC and OFB.
