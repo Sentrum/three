@@ -4,6 +4,10 @@ import itertools
 irr = [ 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 key = [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]
 
+#gold_plaintext.in text:
+text = "This is an example input file created specifically for the third mandatory assignment in INF143A. If you are reading this, I wish you a great Easter vacation, and good luck on the assignment!"
+
+
 def bin2int(B):
     n = 0
     for i in range(len(B)):
@@ -52,29 +56,16 @@ def encrypt(P,K):
 
 #print(encrypt([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]))
 
-text = "This is an example input file created specifically for the third mandatory assignment in INF143A. If you are reading this, I wish you a great Easter vacation, and good luck on the assignment!"
-
 def text_to_binary_list(P):
     bin_list = []
     for x in P:
         z = format(ord(x), 'b')   
         for y in z:
             bin_list.append(int(y))
-    #print(bin_list, len(bin_list))
     return bin_list  
 
-
-### TESTING
-#chr(84) #num to string
-#print(ord("T")) #string to num
-#print(format(84,'b')) #num to binary 
-
-#text_to_binary_list(text)
-#print(ecb_encrypt(text,key))
-
-
 #   ECB mode: encrypt the plaintext with the same key, and return the ciphertext. 
-def ecb_encrypt(P ,K):
+def ecb_encrypt(P, K): 
     newP = text_to_binary_list(P) # turn P from a string to a list of bits
     ciphertext = []
     #count = 0
@@ -88,35 +79,27 @@ def ecb_encrypt(P ,K):
 #   CBC mode: encrypt the plaintext with the same key, and XOR the ciphertext with
 #   the previous ciphertext block. Return the ciphertext.
 
-def cbc_encrypt(P, K, IV):
+def cbc_encrypt(P, K):
     newP = text_to_binary_list(P) # turn P from a string to a list of bits
     ciphertext = []
-    prev_ciphertext = IV
-    #count = 0
+    prev_ciphertext = [0]*32;
+
     for i in range(0, len(newP), 32):
         ciphertext.append(encrypt(xor(newP[i:i+32], prev_ciphertext), K)) # encrypt the 32 bits of P
         prev_ciphertext = ciphertext[-1]
-        #count += 1
-    #print(count) ## for-loop is looping 41 times which is the expected amount of blocks
     return ciphertext
 
 
 #function for output feedback mode(OFB) of operation 
 ## TODO NOT IMPLEMENTED YET
-def ofb_encrypt(P, K, IV):
-    newP = text_to_binary_list(P) # turn P from a string to a list of bits
+def ofb_encrypt(P, K):
     ciphertext = []
-    prev_ciphertext = IV
-    #count = 0
-    for i in range(0, len(newP), 32):
-        ciphertext.append(encrypt(xor(newP[i:i+32], prev_ciphertext), K)) # encrypt the 32 bits of P
-        prev_ciphertext = ciphertext[-1]
-        #count += 1
-    #print(count) ## for-loop is looping 41 times which is the expected amount of blocks
     return ciphertext
 
-##TODO 
 # encrypt the plaintext in gold_plaintext.in with ECB, CBC and OFB.
+print(f"Result of ecb encryption on gold_plaintext:  {ecb_encrypt(text, key)}")
+print(f"Result of cbc encryption on gold_plaintext:  {cbc_encrypt(text, key)}")
+
 
 
 
