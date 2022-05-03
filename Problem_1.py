@@ -26,7 +26,7 @@ def multiplication(A,B,irr):
     result = [ ]
     for i in range(len(A)):
         result.append(0)
-    
+
     for i in range(len(A)):
         if B[i] == 1:
             shift = A
@@ -59,7 +59,7 @@ def encrypt(P,K):
 def text_to_binary_list(P):
     bin_list = []
     for x in P:
-        z = format(ord(x), 'b')   
+        z = format(ord(x), 'b')
         for y in z:
             bin_list.append(int(y))
     return bin_list  
@@ -73,7 +73,7 @@ def ecb_encrypt(P, K):
         ciphertext.append(encrypt(newP[i:i+32], K)) # encrypt the 32 bits of P
         #count += 1
     #print(count) ## for-loop is looping 41 times which is the expected amount of blocks
-    return ciphertext 
+    return ciphertext
 
 
 #   CBC mode: encrypt the plaintext with the same key, and XOR the ciphertext with
@@ -90,7 +90,7 @@ def cbc_encrypt(P, K):
     return ciphertext
 
 
-#function for output feedback mode(OFB) of operation 
+#function for output feedback mode(OFB) of operation
 ## TODO NOT IMPLEMENTED YET
 def ofb_encrypt(P, K):
     ciphertext = []
