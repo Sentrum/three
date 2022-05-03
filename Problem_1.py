@@ -3,6 +3,7 @@ import itertools
 #x^32 + x^15 + x^9 + x^7 + x^4 + x^3 + 1
 irr = [ 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 key = [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]
+iv = 32*[1]
 
 #gold_plaintext.in text:
 text = "This is an example input file created specifically for the third mandatory assignment in INF143A. If you are reading this, I wish you a great Easter vacation, and good luck on the assignment!"
@@ -79,10 +80,10 @@ def ecb_encrypt(P, K):
 #   CBC mode: encrypt the plaintext with the same key, and XOR the ciphertext with
 #   the previous ciphertext block. Return the ciphertext.
 
-def cbc_encrypt(P, K):
+def cbc_encrypt(P, K, IV):
     newP = text_to_binary_list(P) # turn P from a string to a list of bits
     ciphertext = []
-    prev_ciphertext = [0]*32;
+    prev_ciphertext = IV
 
     for i in range(0, len(newP), 32):
         ciphertext.append(encrypt(xor(newP[i:i+32], prev_ciphertext), K)) # encrypt the 32 bits of P
@@ -92,13 +93,13 @@ def cbc_encrypt(P, K):
 
 #function for output feedback mode(OFB) of operation
 ## TODO NOT IMPLEMENTED YET
-def ofb_encrypt(P, K):
+def ofb_encrypt(P, K, IV):
     ciphertext = []
     return ciphertext
 
 # encrypt the plaintext in gold_plaintext.in with ECB, CBC and OFB.
 print(f"Result of ecb encryption on gold_plaintext:  {ecb_encrypt(text, key)}")
-print(f"Result of cbc encryption on gold_plaintext:  {cbc_encrypt(text, key)}")
+print(f"Result of cbc encryption on gold_plaintext:  {cbc_encrypt(text, key, iv)}")
 
 
 
